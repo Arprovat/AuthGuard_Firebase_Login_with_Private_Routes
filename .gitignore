@@ -11,8 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
-
+src\components\FireBase\FireBase.js
 # Editor directories and files
+FireBase.jsx
 .vscode/*
 !.vscode/extensions.json
 .idea

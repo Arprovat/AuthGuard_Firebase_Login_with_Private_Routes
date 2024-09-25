@@ -1,12 +1,29 @@
-import {  NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
+import { Auth_context } from "../Private-auth/Private_auth";
+import profile from '../profile/UserProfile';
 
 const Navbar = () => {
+    const { User, SignOUt } = useContext(Auth_context)
     const navList = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/login'>Login</NavLink></li>
         <li><NavLink to='/signUp'>SignUp</NavLink></li>
+        {
+            User && <li><NavLink to='/profile'>profile</NavLink></li>
+
+        }
 
     </>
+    const handledSignOut = () => {
+        SignOUt()
+        .then(()=>{
+            console.log('sign out')
+        })
+        .catch(err => {
+            console.log(err.message)
+        })
+    }
     return (
         <div className="navbar bg-base-100">
             <div className="navbar-start">
@@ -29,7 +46,7 @@ const Navbar = () => {
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         {
-                    navList
+                            navList
                         }
                     </ul>
                 </div>
@@ -37,11 +54,17 @@ const Navbar = () => {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                   {navList}
+                    {navList}
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                {
+                    User && <p>
+                        {User.email}
+                    </p>
+
+                }
+                <a onClick={handledSignOut} className="btn">Sing Out</a>
             </div>
         </div>
     );
